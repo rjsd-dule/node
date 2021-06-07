@@ -1,0 +1,42 @@
+extends layout
+
+block contenido
+	.contenido-principal
+		h1 #{namepage}
+
+		form.agregar-tarea(action=`/proyectos/${proyecto.url}` method="POST")
+			.campo
+				label(for="tarea") Tarea:
+				input.nombre-tarea(type="text" name="tarea" placeholder="nombre tarea")
+			.campo.enviar
+				input.boton.nueva-tareas(type="submit" value="agregar")
+		.listado-pendientes
+			ul
+				if tareas.length
+					each tarea in tareas
+						li.tarea(data-tarea=tarea.id)
+							p=tarea.tarea
+							.acciones
+								if tarea.estado==0
+									p
+										a.btn.btn-primary(href='#' role='button')
+											span.glyphicon.glyphicon-ok
+								else
+									p
+										a.btn.btn-success.completo(href='#' role='button')
+											span.glyphicon.glyphicon-ok
+								p
+									a(href='#')
+										span.glyphicon.glyphicon-trash.btn.btn-danger
+				else
+					p No hay homeword
+		//pre=vardump(tareas)
+         
+		// Formulario
+		.avance
+			h2 Avance del Proyecto
+			#barra-avance.barra-avance
+				#porcentaje.porcentaje
+		.contenedor-acciones
+			a(href=`/proyect/update/${proyecto.id}` class="boton") Editar Proyecto
+			button#eliminar-proyecto(data-proyecto-url=proyecto.url type="button" class="botoneliminar") Eliminar Proyecto

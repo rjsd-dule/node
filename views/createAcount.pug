@@ -1,0 +1,27 @@
+doctype
+<!--[if IE 8]><html class="lt-ie9 no-js"><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js"><!--<![endif]-->
+head
+	include partials/header
+body.login
+	.contenedor-formulario
+		h1 Crear Cuenta
+		if locals.mensaje
+			.alerta
+				each categoria in Object.keys(locals.mensaje)
+					each errorr in mensaje[categoria]
+						.alerta(class=`${categoria}`)
+							p=errorr
+
+		form#formulario.caja.caja-login(method='POST' action='/create-cuenta')
+			.campo
+				label(for='email') E-mail :
+				input(type="email" name="email" placeholder="Tu email" value= email)
+			.campo
+				label(for='password') Password :
+				input(type="password" name="password" placeholder="Tu Password" value= password)
+			.campo.enviar
+				input.boton(type="submit" value="Create Acount")
+			.campo
+				a(href="/iniciar-session") Volver a Iniciar Sessión
+	script(src="/dist/bundle.js")

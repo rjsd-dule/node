@@ -1,0 +1,32 @@
+DROP TABLE proyectos;
+
+DROP TABLE tareas;
+
+
+
+const Sequelize=require('sequelize');
+const db=require('../config/db');
+const Proyectos= require('./Proyecto');
+
+
+const Tareas= db.define('tareas',{
+	id:{
+		type:Sequelize.INTEGER(11),
+		primarykey:true,
+		autoIncrement:true
+	},
+	tarea:Sequelize.STRING(100),
+	estado:Sequelize.INTEGER(1)
+});
+//Tareas.belongsTo(Proyectos);
+//Proyectos.hasMany(Tareas); si se coloca de esta manera debe ponerlo en el .js de Proyectos. 
+//Un proyecto puede tener muchas tareas , un arelacion de uno a muchos. 
+module.exports=Tareas;
+
+
+
+//Tareas.belongsTo(Proyectos);
+//Proyectos.hasMany(Tareas); si se coloca de esta manera debe ponerlo en el .js de Proyectos. 
+//Un proyecto puede tener muchas tareas , un arelacion de uno a muchos. 
+
+//Tareas.create({tarea,estado,ProyectoId});
