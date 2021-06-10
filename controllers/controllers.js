@@ -4,7 +4,7 @@ const Tareas  = require('../models/Tareas');
 
 module.exports={
 	home:async(req,resp)=>{
-	   console.log(resp.locals.year);
+	   console.log(resp.locals.usuario);
 	   const proyectos=await Proyectos.findAll();
        resp.render('index',{
        	namepage:'Proyectos '+resp.locals.year,
@@ -28,7 +28,8 @@ nuevo_proyecto: async(req,resp)=>{
 	if (errores.length> 0) {
 		resp.render('new_proyect',{namepage:'nuevo-proyecto',errores,proyectos});
 	}else{
-		const proyecto = await Proyectos.create({nombre});
+		const userId=resp.locals.usuario.id;
+		const proyecto = await Proyectos.create({nombre,userId});
        resp.redirect('/');
 	}
 },//------------------------------------------------------------------
