@@ -4,21 +4,26 @@ const Tareas  = require('../models/Tareas');
 
 module.exports={
 	home:async(req,resp)=>{
-	   console.log(resp.locals.usuario);
-	   const proyectos=await Proyectos.findAll();
+	  // console.log(resp.locals.usuario);
+	 // 
+	   const usersid=resp.locals.usuario.id
+	   const proyectos=await Proyectos.findAll({where:{fk_usuarioId:usersid}});
+	   console.log('---> ',proyectos)
        resp.render('index',{
        	namepage:'Proyectos '+resp.locals.year,
        	proyectos
        });
 },//---------------------------------------------------------------
 new_proyect:async(req,resp)=>{
-	const proyectos=await Proyectos.findAll();
+	const usersid=resp.locals.usuario.id
+	const proyectos=await Proyectos.findAll({where:{fk_usuarioId:usersid}});
 	   resp.render('new_proyect',{namepage:'new_proyect',proyectos});
 },//--------------------------------------------------------------
 nuevo_proyecto: async(req,resp)=>{
 	console.log('req.body----<> ');
 	console.log(req.body);
-	const proyectos=await Proyectos.findAll();
+	const usersid=resp.locals.usuario.id
+  const proyectos=await Proyectos.findAll({where:{fk_usuarioId:usersid}});
 	const {nombre}=req.body;
 	let errores=[];
 	if (!nombre) {
@@ -27,17 +32,22 @@ nuevo_proyecto: async(req,resp)=>{
 
 	if (errores.length> 0) {
 		resp.render('new_proyect',{namepage:'nuevo-proyecto',errores,proyectos});
-	}else{
-		const userId=resp.locals.usuario.id;
-		const proyecto = await Proyectos.create({nombre,userId});
-       resp.redirect('/');
+	}else{ 
+		const fk_usuarioId=resp.locals.usuario.id;
+		console.log('verificando la entrada del id '+fk_usuarioId);
+		const proyecto = await Proyectos.create({nombre,fk_usuarioId});
+       resp.redirect('/'); 
 	}
 },//------------------------------------------------------------------
  form_proyect_url:async(req,res)=>{
-   const proyectosPromise=await Proyectos.findAll();
+ 	 const usersid=res.locals.usuario.id;
+ 	 console.log('usersid-usersid ['+usersid);
+   const proyectosPromise= Proyectos.findAll({where:{fk_usuarioId:usersid}});
  	 const proyectoPromise=Proyectos.findOne({
- 		where:{url:req.params.var_url}
+ 		where:{url:req.params.var_url,fk_usuarioId:usersid}
  	});
+ 	 console.log('proyectosPromise ----<',proyectosPromise);
+ 	 console.log('proyectoPromise  ---->',proyectoPromise);
  	const [proyectos,proyecto]=await Promise.all([proyectosPromise,proyectoPromise]);
  	// consulatar tareas del proyecto actual
  	const tareas = await Tareas.findAll({
@@ -46,16 +56,18 @@ nuevo_proyecto: async(req,resp)=>{
  		  {model:Proyectos}
  		]
  	});
- 	 console.log(tareas);
+ 	 console.log('tareassss ',tareas);
    if (!proyecto) return next();
    res.render('homework',{namepage:'homework '+req.params.var_url,proyecto,proyectos,tareas});
  
  },
  update_form:async(req,res)=>{
  	console.log('out req.params.var_url '+req.params.var_url);
- 	const proyectosPromise=await Proyectos.findAll();
+ 	const usersid=res.locals.usuario.id
+	const proyectosPromise=await Proyectos.findAll({where:{fk_usuarioId:usersid}});
+
  	const proyectoPromise=Proyectos.findOne({
- 		where:{id:req.params.var_url}
+ 		where:{id:req.params.var_url,fk_usuarioId:usersid}
  	});
  	const [proyectos,proyecto]=await Promise.all([proyectosPromise,proyectoPromise]);
  	console.log('salida de datos de la base de datos ',proyectos);
@@ -64,7 +76,8 @@ nuevo_proyecto: async(req,resp)=>{
     });
  },
  update_proyect:async(req,res)=>{
-   const proyectos=await Proyectos.findAll();
+ 	 const usersid=res.locals.usuario.id
+	 const proyectos=await Proyectos.findAll({where:{fk_usuarioId:usersid}});
 	const {nombre}=req.body;
 	let errores=[];
 	if (!nombre) {

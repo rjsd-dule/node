@@ -47,6 +47,6 @@ const users=db.define('users',{
 users.prototype.verificarPasword=function(password){
 	return bcrypt.compareSync(password,this.password);
 }
-users.hasMany(Proyectos);// crea el forenkey de la tabla de proyectos
+users.hasMany(Proyectos,{foreignKey: 'fk_usuarioId'});// crea el forenkey de la tabla de proyectos
 
 module.exports=users

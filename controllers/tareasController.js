@@ -26,14 +26,14 @@ module.exports={
 	  
 	},
 	changestate:async(req,res,next)=>{
-	 console.log('parametro -> ',req.params);
+	 console.log('parametro -><-- ',req.params);
 	 const {id}=req.params;
 	 const tarea=await Tareas.findOne({
 	 	where:{
 	 		id
 	 	}
 	 });
-	 console.log(tarea);
+	 console.log('tareas id ---<',tarea);
 	 //change state
 	 let estado=0;
 	 if (tarea.estado==estado)

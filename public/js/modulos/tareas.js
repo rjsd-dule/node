@@ -14,7 +14,7 @@ if (tareas){
            axios.patch(url,{idtarea})
            .then(function (request){
            	  if(request.status===200)
-           	  	{window.location.href = `/proyectos/woocommerce-con-worpres-ZyRfj07vU` }
+           	  	{location.reload();/*window.location.href = `/proyectos/kotlin-LtFTkwUwL`*/ }
            	  actualizar();
            });
     	}
