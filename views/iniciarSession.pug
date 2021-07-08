@@ -6,8 +6,12 @@ head
 body.login
 	.contenedor-formulario
 		h1 Iniciar Session
-		if error
-			p.alerta.error=error
+		if locals.mensaje
+			.alerta
+				each categoria in Object.keys(locals.mensaje)
+					each errorr in mensaje[categoria]
+						.alerta(class=`${categoria}`)
+							p=errorr
 		form#formulario.caja.caja-login(method='POST' action='/iniciar-session')
 			.campo
 				label(for='email') E-mail :
@@ -17,6 +21,7 @@ body.login
 				input(type="password" name="password" placeholder="Tu Password" value= password)
 			.campo.enviar
 				input.boton(type="submit" value="Iniciar Session")
-			.campo
+			.campo.acciones
 				a(href="/crear-cuenta") ¿ Aun no tienes tu cuenta ? Crea una gratis
+				a(href="/reestablecer") ¿Olvidaste tu Contraseña ?
 	script(src="/dist/bundle.js")
