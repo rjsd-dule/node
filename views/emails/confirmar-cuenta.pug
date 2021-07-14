@@ -1,0 +1,18 @@
+doctype
+<!--[if IE 8]><html class="lt-ie9 no-js"><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js"><!--<![endif]-->
+head
+	//- TODO: Check if it's the good charset
+	meta(charset="utf-8")
+	meta(http-equiv="X-UA-Compatible", content="IE=edge")
+	title 
+	meta(name="description", content="")
+	meta(name="viewport", content="width=device-width,initial-scale=1")
+	<![endif]-->
+	style
+		include ./email.css
+body
+	h2 Confirma tu cuenta
+	p HYa casi estas incrito solo presiona el siquiente boton.
+	a(href='${confirmarUrl}') Confirmar cuenta
+	p Si no puedes acceder a este enlace, visite #{confirmarUrl}

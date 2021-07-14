@@ -7,6 +7,8 @@ const passport=require('./config/passport');
 const flash=require('connect-flash');
 const session=require('express-session');
 const cookieParser=require('cookie-parser');
+//importar las variables
+require('dotenv').config({path:'variables.env'});
 //helpers con algunas funciones 
 const helpers =require('./helpers');
 
@@ -73,8 +75,14 @@ app.use((req,res,next)=>{
 
 
 app.use('/',routes());
+//Servidor y puerto
 
-app.listen(3000);
+const host=process.env.HOST || '0.0.0.0';
+const port=process.env.PORT || 3000;
+  app.listen(port,host,()=>{
+     console.log('a la escucha nuevamente ');
+  });
+//app.listen(3000);
 //app.listen(3000,"192.168.100.11");
 //puerto 
 

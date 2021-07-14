@@ -25,6 +25,7 @@ module.exports=function(){
     routes.delete('/tareas/:id',authController.usuarioAutenticado,tareasController.eliminarTarea);
     //crear cuenta 
     routes.get('/crear-cuenta',usersController.form_createAcount);
+    routes.get('/confirmar/:email',usersController.confirmarCuenta);
     routes.post('/create-cuenta',usersController.createAcount);
     //Iniciar Session
     routes.get('/iniciar-session',usersController.form_iniciarSession);

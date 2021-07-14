@@ -2,11 +2,16 @@
 const Sequelize = require ('sequelize');
 const slug=require('slug');
 const shortid=require('shortid');
-const sequelize= new Sequelize('uptasnode','root','',{
-	host:'localhost',
+//obtener valores de variables.env
+require('dotenv').config({path:'variables.env'});
+const sequelize= new Sequelize(
+	process.env.BD_NOMBRE, //name database
+	process.env.BD_USER,  //users database
+	process.env.BD_PASS, // password database
+	{
+	host:process.env.BD_HOST,//'localhost',
 	dialect:'mysql',
-	port:'3306',
-	operatorsAliases:false,
+	port:process.env.BD_PORT,
 	define:{
 		timestamps:false
 	},
